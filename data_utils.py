@@ -1,3 +1,6 @@
+import jieba
+import math
+import random
 
 def check_bio(tags):
     """
@@ -94,4 +97,59 @@ def create_mapping(dico):
     sorted_items = sorted(dico.items(), key=lambda x:(-x[1], x[0]))
     id_to_item = { i:v[0] for i, v in enumerate(sorted_items)}
     item_to_id = {k: v for v, k in id_to_item.items()}
-    return item_to_id,id_to_item,
+    return item_to_id,id_to_item
+
+
+def get_seg_features(words):
+    """
+    利用jieba分词
+    采用类似bio的编码，0表示单字成词，1表示一个词的开始，2表示一个词的中间，3表示一个词的结尾
+    :param words:
+    :return:
+    """
+    seg_features = []
+    word_list = list(jieba.cut(words))
+    for word in word_list:
+        if len(word) == 1:
+            seg_features.append(0)
+        else:
+            temp = [2] * len(word)
+            temp[0] = 1
+            temp[-1] = 3
+            seg_features.extend(temp)
+    return seg_features
+
+
+class BatchManager(object):
+    def __init__(self, data, batch_size):
+        self.batch_data = self.sort_and_pad(data, batch_size)
+        self.len_data = len(self.batch_data)
+
+    def sort_and_pad(self, data, batch_size):
+        num_batch = int(math.ceil(len(data) / batch_size))
+        sorted_data = sorted(data, key=lambda x: len(x[0]))
+        batch_data = list()
+        for i in range(num_batch):
+            batch_data.append(self.pad_data(sorted_data[i * batch_size: (i+1)*batch_size]))
+        return batch_data
+    @staticmethod
+    def pad_data(data):
+        word_list = []
+        word_id_list = []
+        seg_list = []
+        tag_id_list = []
+        max_length = max([len(sentence[0]) for sentence in data])
+        for line in data:
+            words, word_ids, segs, tag_ids = line
+            padding = [0] * (max_length - len(words))
+            word_list.append(words + padding)
+            word_id_list.append(word_ids + padding)
+            seg_list.append(segs + padding)
+            tag_id_list.append(tag_ids + padding)
+        return [word_list, word_id_list, seg_list, tag_id_list]
+
+    def iter_batch(self, shuffle=False):
+        if shuffle:
+            random.shuffle(self.batch_data)
+        for idx in range(self.len_data):
+            yield self.batch_data[idx]

@@ -79,4 +79,27 @@ def prapare_dataset(sentences, word_to_id, tag_to_id, train=True):
         word_list = [ w[0] for w in s]
         word_id_list = [word_to_id[w if w in word_to_id else '<UNK>'] for w in word_list]
         segs = du.get_seg_features("".join(word_list))
-        print('aaa')
+        if train:
+            tag_id_list = [tag_to_id[w[-1]] for w in s]
+        else:
+            tag_id_list = [none_index for w in s]
+        data.append([word_list, word_id_list, segs, tag_id_list])
+    return data
+
+
+def update_tag_scheme(sentences, tag_scheme):
+    """
+    更新为指定编码
+    :param sentences:
+    :param tag_scheme:
+    :return:
+    """
+    for i, s in enumerate(sentences):
+        tags = [w[-1] for w in s]
+        if not du.check_bio(tags):
+            s_str = '\n'.join(" ".join(w) for w in s)
+            raise Exception("输入的句子应为BIO编码，请检查输入句子%i:\n%s" % (i, s_str))
+        if tag_scheme == 'BIOES':
+            new_tags = du.bio_to_bioes(tags)
+            for word, new_tag in zip(s, new_tags):
+                word[-1] = new_tag
