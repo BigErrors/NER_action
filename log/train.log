@@ -1,0 +1,24 @@
+2019-09-06 16:55:39,328 - log\train.log - INFO - num_words      :	4314
+2019-09-06 16:55:41,440 - log\train.log - INFO - word_dim       :	120
+2019-09-06 16:55:45,884 - log\train.log - INFO - num_tags       :	13
+2019-09-06 16:55:47,526 - log\train.log - INFO - seg_dim        :	20
+2019-09-06 16:56:00,026 - log\train.log - INFO - lstm_dim       :	120
+2019-09-06 16:56:01,519 - log\train.log - INFO - batch_size     :	120
+2019-09-06 16:56:20,667 - log\train.log - INFO - clip           :	5.0
+2019-09-06 16:56:22,640 - log\train.log - INFO - dropout_keep   :	0.5
+2019-09-06 16:56:23,993 - log\train.log - INFO - optimizer      :	adam
+2019-09-06 16:56:25,292 - log\train.log - INFO - lr             :	0.001
+2019-09-06 16:56:26,729 - log\train.log - INFO - tag_schema     :	BIOES
+2019-09-06 16:56:28,075 - log\train.log - INFO - pre_emb        :	True
+2019-09-06 16:59:40,219 - log\train.log - INFO - num_words:	4314
+2019-09-06 16:59:40,219 - log\train.log - INFO - word_dim:	120
+2019-09-06 16:59:40,219 - log\train.log - INFO - num_tags:	13
+2019-09-06 16:59:40,219 - log\train.log - INFO - seg_dim:	20
+2019-09-06 16:59:40,219 - log\train.log - INFO - lstm_dim:	120
+2019-09-06 16:59:40,219 - log\train.log - INFO - batch_size:	120
+2019-09-06 16:59:40,219 - log\train.log - INFO - clip :	5.0
+2019-09-06 16:59:40,219 - log\train.log - INFO - dropout_keep:	0.5
+2019-09-06 16:59:40,219 - log\train.log - INFO - optimizer:	adam
+2019-09-06 16:59:40,219 - log\train.log - INFO - lr   :	0.001
+2019-09-06 16:59:40,219 - log\train.log - INFO - tag_schema:	BIOES
+2019-09-06 16:59:40,219 - log\train.log - INFO - pre_emb:	True
